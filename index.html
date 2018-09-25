@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>Tornado Websocket</title>
+</head>
+<script type="text/javascript">
+function setCookie(name,value)
+{
+    var Days = 30;
+    var exp = new Date();
+    exp.setTime(exp.getTime() + Days*24*60*60*1000);
+    document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+}
+
+	var ws;
+	function onLoad(){
+		ws = new WebSocket("ws://198.2.196.225:8080/ws?group_name=agent&user_id=92&token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo5MiwidXNlcm5hbWUiOiJTaW1OYW1lMzUiLCJleHAiOjE1Mzc5MTA0NjgsImVtYWlsIjoiIn0.u3bGO7Kl1S3qBmm_fJYWcd4G09h4nYL6bq1QDGAsodM");
+		ws.onmessage = function(e){
+			alert(e.data)
+		}
+	}
+
+    var a = {
+    "message_type":"query",
+    "message": "user_amount",
+    "send_type": "private",
+    "args":{"send_user_id":92, "send_group_name": "agent", "user_id":92, "coinpair": "BTC/USDT"}
+}
+	function sendMsg(){
+		ws.send(JSON.stringify(a));
+	}
+</script>
+<body onload='onLoad();'>
+	Message to send:   <input type="text" id="msg" />
+	  <input type="button" onclick="sendMsg();" value="发送" />
+</body>
+</html>
